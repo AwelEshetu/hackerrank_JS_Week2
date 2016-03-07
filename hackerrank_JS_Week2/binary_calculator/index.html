@@ -1,0 +1,131 @@
+<!-- Enter your HTML code here -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <style type="text/css">
+#res {
+    background: lightgray;
+    border: solid;
+    width: 81%;
+    height: 48px;
+    font-size: 20px;
+}
+
+#btns {
+    width: 90%;
+}
+
+#btn0, #btn1 {
+    background: lightgreen;
+    color: brown;
+}
+
+#btnClr, #btnEql {
+    background: darkgreen;
+    color: white;
+}
+
+#btnSum, #btnSub, #btnMul, #btnDiv {
+    background: black;
+    color: red;
+}
+
+Button {
+    width: 22%;
+    height: 36px;
+    font-size: 18px;
+}
+</style>
+<title>Binary Calculator</title>
+</head>
+<body>
+<div id="res"></div>
+    <div id="btns">
+    <button id="btn0" onclick="appendExpressionBy('0')">0</button>
+    <button id="btn1" onclick="appendExpressionBy('1')">1</button>
+    <button id="btnClr" onclick="handleClearClick()">C</button>
+    <button id="btnEql" onclick="calculate()">=</button>
+    <button id="btnSum" onclick="handleOperatorClick('+')">+</button>
+    <button id="btnSub" onclick="handleOperatorClick('-')">-</button>
+    <button id="btnMul" onclick="handleOperatorClick('*')">*</button>
+    <button id="btnDiv" onclick="handleOperatorClick('/')">/</button>
+    </div>
+    <script type="text/javascript">
+var divRes = document.getElementById("res");
+
+var expression = "";
+var hasOperator = false;
+
+function renderExpression() {
+    divRes.innerHTML = expression;
+}
+
+function appendExpressionBy(value) {
+    expression += value;
+    renderExpression();
+}
+
+function updateExpressionBy(value) {
+    expression = value;
+    renderExpression();
+}
+
+function calculate() {
+    if(!hasOperator) {
+        return;
+    }
+
+    hasOperator = false;
+  
+    var operands, op1, op2;
+    var result = 0;
+  
+  if(expression.indexOf('+')!=-1){
+		operands = expression.split("+");
+        op1 = parseInt(operands[0],2);
+        op2 = parseInt(operands[1],2);
+        var sum = op1+op2;
+        result = sum.toString(2);
+    }
+    else if(expression.indexOf("-")!= -1){
+        operands = expression.split("-");
+        op1 = parseInt(operands[0],2);
+        op2 = parseInt(operands[1],2);
+        var sum = op1-op2;
+        result = sum.toString(2);
+    }
+    else if(expression.indexOf("*")!= -1){
+        operands = expression.split("*");
+        op1 = parseInt(operands[0],2);
+        op2 = parseInt(operands[1],2);
+        var sum = op1*op2;
+        result = sum.toString(2);
+    }
+    else if(expression.indexOf("/")!= -1){
+        operands = expression.split("/");
+        op1 = parseInt(operands[0],2);
+        op2 = parseInt(operands[1],2);
+        var sum = op1/op2;
+        result = sum.toString(2);
+    }
+  
+    updateExpressionBy(result.toString(2));
+}
+
+function handleOperatorClick(operator) {
+    if(hasOperator) {
+        calculate();
+    }
+
+    hasOperator = true;
+    appendExpressionBy(operator);
+}
+
+function handleClearClick() {
+    updateExpressionBy("");
+    hasOperator = false;
+}
+</script>
+</body>
+</html>
